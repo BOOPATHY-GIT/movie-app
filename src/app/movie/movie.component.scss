@@ -1,0 +1,46 @@
+
+table {
+  width: 100%;
+}
+
+.movie-table-container {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.mat-column-rating,
+.mat-column-ifco {
+  max-width: 120px;
+}
+.mat-column-budget {
+  max-width: 130px
+}
+
+.mat-column-title {
+  max-width: 150px;
+}
+
+.movie-actor-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  .movie-actor-card {
+    flex: 1 1 48%;
+    margin-right: 16px;
+  }
+  .movie-actor-card:last-child {
+    margin-right: 0;
+  }
+}
+.movie-actor-details {
+  list-style-type: none;
+  margin:0;
+  padding: 0;
+  li {
+    list-style-type: none;
+    padding: 8px 0;
+  }
+}
+.movie-post-button-row {
+  padding: 16px 0;
+}

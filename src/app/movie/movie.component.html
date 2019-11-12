@@ -1,0 +1,59 @@
+
+<h2>Featured Actors</h2>
+<div class="movie-actor-wrapper">
+  <mat-card class="movie-actor-card">
+    <mat-card-title>Most Featured</mat-card-title>
+    <mat-card-content>
+      <h3>Actor: {{mostFeaturedActor.actor}}</h3>
+      <ul class="movie-actor-details">
+        <li><strong>Total Movies</strong>: {{mostFeaturedActor.totalMovies}}</li>
+        <li><strong>Highest Rated Movie</strong>: {{mostFeaturedActor.highestRatedMovie.title}} ({{mostFeaturedActor.highestRatedMovie.rating}})</li>
+        <li><strong>Highest Budget Movie</strong>: {{mostFeaturedActor.highestBudgetMovie.title}} ({{mostFeaturedActor.highestBudgetMovie.budget}})</li>
+        <li><strong>Highest IFCO Rated Movie</strong>: {{mostFeaturedActor.highestIFCORatedMovie.title}} ({{mostFeaturedActor.highestIFCORatedMovie.ifco}})</li>
+      </ul>
+
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="movie-actor-card">
+    <mat-card-title>Least Featured</mat-card-title>
+    <mat-card-content>
+      <h3>Actor: {{leastFeaturedActor.actor}}</h3>
+      <ul class="movie-actor-details">
+        <li><strong>Total Movies</strong>: {{leastFeaturedActor.totalMovies}}</li>
+        <li><strong>Highest Rated Movie</strong>: {{leastFeaturedActor.highestRatedMovie.title}} ({{leastFeaturedActor.highestRatedMovie.rating}})</li>
+        <li><strong>Highest Budget Movie</strong>: {{leastFeaturedActor.highestBudgetMovie.title}} ({{leastFeaturedActor.highestBudgetMovie.budget}})</li>
+        <li><strong>Highest IFCO Rated Movie</strong>: {{leastFeaturedActor.highestIFCORatedMovie.title}} ({{leastFeaturedActor.highestIFCORatedMovie.ifco}})</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="movie-post-button-row"><button mat-raised-button  color="primary" (click)='postActorData()'>Submit Calculated Data</button></div>
+
+<h2>Movie list</h2>
+<div class="movie-table-container">
+  <mat-card>
+    <table mat-table [dataSource]="movieData" class="movie-table">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let row">{{row.title}}</td>
+      </ng-container>
+      <ng-container matColumnDef="rating">
+        <th mat-header-cell *matHeaderCellDef>Rating</th>
+        <td mat-cell *matCellDef="let row">{{row.rating}}</td>
+      </ng-container>
+      <ng-container matColumnDef="ifco">
+        <th mat-header-cell *matHeaderCellDef>IFCO</th>
+        <td mat-cell *matCellDef="let row">{{row.ifco}}</td>
+      </ng-container>
+      <ng-container matColumnDef="budget">
+        <th mat-header-cell *matHeaderCellDef>IFCO</th>
+        <td mat-cell *matCellDef="let row">{{row.budget}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>
+
+
+
