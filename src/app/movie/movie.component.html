@@ -1,7 +1,7 @@
 
 <h2>Featured Actors</h2>
 <div class="movie-actor-wrapper">
-  <mat-card class="movie-actor-card">
+  <mat-card *ngIf="mostFeaturedActor" class="movie-actor-card">
     <mat-card-title>Most Featured</mat-card-title>
     <mat-card-content>
       <h3>Actor: {{mostFeaturedActor.actor}}</h3>
@@ -14,7 +14,7 @@
 
     </mat-card-content>
   </mat-card>
-  <mat-card class="movie-actor-card">
+  <mat-card *ngIf="leastFeaturedActor" class="movie-actor-card">
     <mat-card-title>Least Featured</mat-card-title>
     <mat-card-content>
       <h3>Actor: {{leastFeaturedActor.actor}}</h3>

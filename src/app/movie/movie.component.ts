@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { MovieService } from '../services/movie.service';
 import {FeaturedActorType} from './movie.interface';
 
@@ -16,44 +16,40 @@ export class MovieComponent implements OnInit {
   private listOfActors = [];
   private ifcoOrder = ['N/A', 'G', 'PG', '12', '12A', '15', '15A', '16', '18'];
 
-  constructor(public movieService: MovieService, private cdf: ChangeDetectorRef ) { }
+  constructor(public movieService: MovieService) { }
 
   ngOnInit() {
     this.getMovies();
   }
 
-  public getMovies() {
-    this.movieService.getData('movies?limit=155').subscribe((data) => {
-      if (data) {
-        this.movieData = data;
-        this.getAllActors(this.movieData);
-      }
-    });
-  }
-
-  public getAllActors(movies) {
-    movies.map(movie => movie.cast)
-      .map((data) => {
-        data.map((actor) => {
-          this.listOfActors.push(actor);
-        });
-      });
-    this.mostFeaturedActor = this.mostOccruingActor();
-    this.leastFeaturedActor = this.leastOccuring();
-    this.cdf.detectChanges();
-  }
-
   public postActorData() {
     this.movieService.postData([this.mostFeaturedActor, this.leastFeaturedActor], 'movies').subscribe(res => {
+      console.log('RES**', res);
     }, err => {
       console.log(err);
     });
   }
 
-  private mostOccruingActor() {
-    const mostOccurringActor = this.listOfActors.sort().filter(x => typeof(x) === 'string').reduce(
-      (a, b, i, arr ) =>
-        (arr.filter(v => v === a).length >= arr.filter(v => v === b).length ? a : b), null);
+  private getMovies() {
+    this.movieService.getData('movies?limit=155').subscribe((movieData) => {
+      if (movieData) {
+        this.movieData = movieData;
+        this.findFeaturedActors();
+      }
+    });
+  }
+
+  private findFeaturedActors() {
+    this.listOfActors = this.movieData.reduce((actors, movie) => actors.concat(movie.cast), []).filter(x => typeof(x) === 'string');
+    this.mostFeaturedActor = this.mostOccuringActor();
+    this.leastFeaturedActor = this.leastOccuring();
+  }
+
+  private mostOccuringActor() {
+    const mostOccurringActor = [...this.listOfActors.sort().reduce((r, n) => // create a map of occurrences
+      r.set(n, (r.get(n) || 0) + 1), new Map()
+    )]
+      .reduce((r, v) => v[1] > r[1] ? v : r)[0];
     return this.findRelatedMovies(mostOccurringActor);
   }
 
